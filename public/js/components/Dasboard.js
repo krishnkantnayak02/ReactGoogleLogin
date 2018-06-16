@@ -3,12 +3,19 @@ import React , {Component} from 'react';
 export default class Dashboard extends Component{
     constructor(props){
         super(props);
+        this.state = {profile : false}
         this.dashboardContains = this.dashboardContains.bind(this);
+        this.loadProfile = this.loadProfile.bind(this);
         }
      dashboardContains() {
         console.log("testing")
-    }  
+    }
+
+    loadProfile(){
+        this.setState({loadProfile : true})
+    }
     render(){
+        console.log("state" , this.state.loadProfile)
         let nevbar  = <nav className="navbar navbar-inverse">
                             <div className="container-fluid">
                             <div className="navbar-header">
@@ -16,18 +23,38 @@ export default class Dashboard extends Component{
                             </div>
                             <ul className="nav navbar-nav">
                                 <li className="active"><a >Home</a></li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li><a >Dashboard</a></li>
                             </ul>
                             </div>
-                        </nav> 
-               return( 
+                        </nav>
+
+        var profile =   this.state.loadProfile && <div className="row">
+                                                        <div className="col-sm-8" >
+                                                        <label >Name : {this.props.userProfile.name}</label> <br/>
+                                                        <label >MailId : {this.props.userProfile.email}</label><br/>
+                                                        </div>
+                                                        <div className="col-sm-4" >
+                                                        <img src = {this.props.userProfile.imageUrl} />
+                                                        </div>
+                                                    </div> 
+               return(
             <div className="container">
-             {nevbar}
-                    <button type="button" className="btn btn-primary" onClick = {this.dashboardContains}>Add Stream</button><br/>
-                    <label > name : {this.props.userProfile.name}</label> <br/>
-                    <label > emailId : {this.props.userProfile.email}</label><br/>
-                    <img src = {this.props.userProfile.imageUrl} />
-          </div>
+              {nevbar}
+                <div className="container">
+                   <h2>Add Stream </h2> <br/>
+                        <div className="row">
+                            <div className="col-sm-2" >
+                            <button type="button" className="btn btn-primary" onClick = {this.dashboardContains}>Google +</button><br/>
+                            </div>
+                            <div className="col-sm-10" >
+                                    <nav className="navbar navbar-light bg-light" style = {{'border':'1px solid'}}>
+                                    <button onClick = {this.loadProfile} > Profile </button>
+                                    </nav>
+                                    {profile}
+                            </div>
+                        </div>
+                </div>
+             </div>
         )
     }
 }

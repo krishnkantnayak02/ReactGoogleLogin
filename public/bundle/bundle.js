@@ -18396,7 +18396,9 @@ var Dashboard = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
+        _this.state = { profile: false };
         _this.dashboardContains = _this.dashboardContains.bind(_this);
+        _this.loadProfile = _this.loadProfile.bind(_this);
         return _this;
     }
 
@@ -18406,8 +18408,14 @@ var Dashboard = function (_Component) {
             console.log("testing");
         }
     }, {
+        key: "loadProfile",
+        value: function loadProfile() {
+            this.setState({ loadProfile: true });
+        }
+    }, {
         key: "render",
         value: function render() {
+            console.log("state", this.state.loadProfile);
             var nevbar = _react2.default.createElement(
                 "nav",
                 { className: "navbar navbar-inverse" },
@@ -18440,11 +18448,40 @@ var Dashboard = function (_Component) {
                             null,
                             _react2.default.createElement(
                                 "a",
-                                { href: "#" },
+                                null,
                                 "Dashboard"
                             )
                         )
                     )
+                )
+            );
+
+            var profile = this.state.loadProfile && _react2.default.createElement(
+                "div",
+                { className: "row" },
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-sm-8" },
+                    _react2.default.createElement(
+                        "label",
+                        null,
+                        "Name : ",
+                        this.props.userProfile.name
+                    ),
+                    " ",
+                    _react2.default.createElement("br", null),
+                    _react2.default.createElement(
+                        "label",
+                        null,
+                        "MailId : ",
+                        this.props.userProfile.email
+                    ),
+                    _react2.default.createElement("br", null)
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "col-sm-4" },
+                    _react2.default.createElement("img", { src: this.props.userProfile.imageUrl })
                 )
             );
             return _react2.default.createElement(
@@ -18452,27 +18489,44 @@ var Dashboard = function (_Component) {
                 { className: "container" },
                 nevbar,
                 _react2.default.createElement(
-                    "button",
-                    { type: "button", className: "btn btn-primary", onClick: this.dashboardContains },
-                    "Add Stream"
-                ),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement(
-                    "label",
-                    null,
-                    " name : ",
-                    this.props.userProfile.name
-                ),
-                " ",
-                _react2.default.createElement("br", null),
-                _react2.default.createElement(
-                    "label",
-                    null,
-                    " emailId : ",
-                    this.props.userProfile.email
-                ),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("img", { src: this.props.userProfile.imageUrl })
+                    "div",
+                    { className: "container" },
+                    _react2.default.createElement(
+                        "h2",
+                        null,
+                        "Add Stream "
+                    ),
+                    " ",
+                    _react2.default.createElement("br", null),
+                    _react2.default.createElement(
+                        "div",
+                        { className: "row" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-sm-2" },
+                            _react2.default.createElement(
+                                "button",
+                                { type: "button", className: "btn btn-primary", onClick: this.dashboardContains },
+                                "Google +"
+                            ),
+                            _react2.default.createElement("br", null)
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "col-sm-10" },
+                            _react2.default.createElement(
+                                "nav",
+                                { className: "navbar navbar-light bg-light", style: { 'border': '1px solid' } },
+                                _react2.default.createElement(
+                                    "button",
+                                    { onClick: this.loadProfile },
+                                    " Profile "
+                                )
+                            ),
+                            profile
+                        )
+                    )
+                )
             );
         }
     }]);
