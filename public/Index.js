@@ -1,13 +1,9 @@
 import React  from 'react'
 import  {render} from 'react-dom'
-import Login from './js/components/Login'
-
+import App from './js/components/App'
 
     render(
-        <Login />,
+        
+        <App />,
          document.getElementById("root")
         )
-
-
-
-   
