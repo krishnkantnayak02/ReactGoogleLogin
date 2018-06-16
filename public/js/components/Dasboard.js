@@ -1,8 +1,8 @@
 import React , {Component} from 'react';
 
 export default class Dashboard extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.dashboardContains = this.dashboardContains.bind(this);
         }
      dashboardContains() {
@@ -23,7 +23,10 @@ export default class Dashboard extends Component{
                return( 
             <div className="container">
              {nevbar}
-                    <button type="button" className="btn btn-primary" onClick = {this.dashboardContains}>Add Stream</button>
+                    <button type="button" className="btn btn-primary" onClick = {this.dashboardContains}>Add Stream</button><br/>
+                    <label > name : {this.props.userProfile.name}</label> <br/>
+                    <label > emailId : {this.props.userProfile.email}</label><br/>
+                    <img src = {this.props.userProfile.imageUrl} />
           </div>
         )
     }

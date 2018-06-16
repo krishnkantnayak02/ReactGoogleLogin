@@ -6,14 +6,15 @@ export default class App extends Component{
 
     constructor(){
         super();
-        this.state = {toggel : 'login'}
+        this.state = {toggel : 'login' , userProfile : {}}
         this.responseGoogle = this.responseGoogle.bind(this);
 
     }
 
      responseGoogle(response) {
         if(response.profileObj.email != null && response.profileObj.googleId != null){
-           this.setState({toggel : 'dashboard'})
+           this.setState({toggel : 'dashboard' , userProfile :response.profileObj })
+           console.log("response>>>>" , response)
         }else{
             alert("only login with google account!!")
         }
@@ -39,7 +40,7 @@ export default class App extends Component{
                             )
                break;
                case "dashboard" : return(
-                            <Dashboard />
+                            <Dashboard  userProfile = {this.state.userProfile}/>
                             )
                  break;
                  default : return(
