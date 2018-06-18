@@ -1,4 +1,5 @@
 import React , {Component} from 'react';
+import axios from 'axios';
 
 export default class Dashboard extends Component{
     constructor(props){
@@ -8,7 +9,15 @@ export default class Dashboard extends Component{
         this.loadProfile = this.loadProfile.bind(this);
         }
      dashboardContains() {
-        console.log("testing")
+       let userId = this.props.userProfile.googleId 
+       let url = 'https://www.googleapis.com/plus/v1/people/'+userId+'/activities/public'
+       axios.get(url)
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
     }
 
     loadProfile(){
