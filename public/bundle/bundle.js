@@ -19092,13 +19092,47 @@ var Dashboard = function (_Component) {
     _createClass(Dashboard, [{
         key: 'dashboardContains',
         value: function dashboardContains() {
-            var userId = this.props.userProfile.googleId;
-            var url = 'https://www.googleapis.com/plus/v1/people/' + userId + '/activities/public';
-            _axios2.default.get(url).then(function (response) {
-                console.log(response);
-            }).catch(function (error) {
-                console.log(error);
-            });
+
+            debugger;
+            gapi.load('client', start);
+            function start() {
+                console.log("start", gapi);
+                gapi.client.init({
+                    'apiKey': 'AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds',
+                    // Your API key will be automatically added to the Discovery Document URLs.
+                    // 'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
+                    // clientId and scope are optional if auth is not required.
+                    'clientId': '642089443893-qfr86hlfvk53dc88c2abso29n5035mh8.apps.googleusercontent.com',
+                    'scope': 'profile email'
+                }).then(function () {
+                    console.log("in side ten");
+                    // 3. Initialize and make the API request.
+                    // return gapi.client.people.people.get({
+                    // 'resourceName': 'people/me',
+                    // 'requestMask.includeField': 'person.names'
+                    // });
+
+                    var request = gapi.client.plus.people.get({
+                        'userId': 'me'
+                    });
+                }).then(function (response) {
+                    console.log(response.result);
+                }, function (reason) {
+                    console.log('Error: ');
+                });
+            };
+            // 1. Load the JavaScript client library.
+
+
+            //    let userId = this.props.userProfile.googleId 
+            //    let url = 'https://www.googleapis.com/plus/v1/people/'+userId+'/activities/public'
+            //    axios.get(url)
+            //             .then(function (response) {
+            //                 console.log(response);
+            //             })
+            //             .catch(function (error) {
+            //                 console.log(error);
+            //             });
         }
     }, {
         key: 'loadProfile',
@@ -19197,12 +19231,7 @@ var Dashboard = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'col-sm-2' },
-                            _react2.default.createElement(
-                                'button',
-                                { type: 'button', className: 'btn btn-primary', onClick: this.dashboardContains },
-                                'Google +'
-                            ),
-                            _react2.default.createElement('br', null)
+                            'Google +'
                         ),
                         _react2.default.createElement(
                             'div',
@@ -19214,6 +19243,11 @@ var Dashboard = function (_Component) {
                                     'button',
                                     { onClick: this.loadProfile },
                                     ' Profile '
+                                ),
+                                _react2.default.createElement(
+                                    'button',
+                                    { onClick: this.dashboardContains },
+                                    ' Public Post '
                                 )
                             ),
                             profile
