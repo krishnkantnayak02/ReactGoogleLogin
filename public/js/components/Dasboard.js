@@ -9,19 +9,14 @@ export default class Dashboard extends Component{
         this.loadProfile = this.loadProfile.bind(this);
         }
      dashboardContains() {
-        
-                    
-debugger
+
 gapi.load('client', start);
                 function start() {
                     console.log("start", gapi)
                 gapi.client.init({
                     'apiKey': 'AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds',
-                    // Your API key will be automatically added to the Discovery Document URLs.
-                    // 'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
-                    // clientId and scope are optional if auth is not required.
                     'clientId': '642089443893-qfr86hlfvk53dc88c2abso29n5035mh8.apps.googleusercontent.com',
-                    'scope': 'profile email',
+                    'scope': 'https://www.googleapis.com/auth/plus.login'
                 }).then(function() {
                     console.log("in side ten")
                     // 3. Initialize and make the API request.
@@ -30,9 +25,19 @@ gapi.load('client', start);
                     // 'requestMask.includeField': 'person.names'
                     // });
 
-                    var request = gapi.client.plus.people.get({
-                        'userId': 'me'
-                    });
+                    var request = gapi.plus.activities.list({
+                        'userId' : 'me',
+                        'collection' : 'public'
+                      });
+                      
+                      request.execute(function(resp) {
+                        var numItems = resp.items.length;
+                        for (var i = 0; i < numItems; i++) {
+                          console.log('ID: ' + resp.items[i].id + ' Content: ' +
+                            resp.items[i].object.content);
+                        }
+                      });
+                      
                 }).then(function(response) {
                     console.log(response.result);
                 }, function(reason) {
