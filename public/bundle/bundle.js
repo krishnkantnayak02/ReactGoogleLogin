@@ -19083,7 +19083,7 @@ var Dashboard = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-        _this.state = { profile: false };
+        _this.state = { profile: false, postData: [] };
         _this.dashboardContains = _this.dashboardContains.bind(_this);
         _this.loadProfile = _this.loadProfile.bind(_this);
         return _this;
@@ -19092,51 +19092,14 @@ var Dashboard = function (_Component) {
     _createClass(Dashboard, [{
         key: 'dashboardContains',
         value: function dashboardContains() {
-
-            gapi.load('client', start);
-            function start() {
-                console.log("start", gapi);
-                gapi.client.init({
-                    'apiKey': 'AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds',
-                    'clientId': '642089443893-qfr86hlfvk53dc88c2abso29n5035mh8.apps.googleusercontent.com',
-                    'scope': 'https://www.googleapis.com/auth/plus.login'
-                }).then(function () {
-                    console.log("in side ten");
-                    // 3. Initialize and make the API request.
-                    // return gapi.client.people.people.get({
-                    // 'resourceName': 'people/me',
-                    // 'requestMask.includeField': 'person.names'
-                    // });
-
-                    var request = gapi.plus.activities.list({
-                        'userId': 'me',
-                        'collection': 'public'
-                    });
-
-                    request.execute(function (resp) {
-                        var numItems = resp.items.length;
-                        for (var i = 0; i < numItems; i++) {
-                            console.log('ID: ' + resp.items[i].id + ' Content: ' + resp.items[i].object.content);
-                        }
-                    });
-                }).then(function (response) {
-                    console.log(response.result);
-                }, function (reason) {
-                    console.log('Error: ');
-                });
-            };
-            // 1. Load the JavaScript client library.
-
-
-            //    let userId = this.props.userProfile.googleId 
-            //    let url = 'https://www.googleapis.com/plus/v1/people/'+userId+'/activities/public'
-            //    axios.get(url)
-            //             .then(function (response) {
-            //                 console.log(response);
-            //             })
-            //             .catch(function (error) {
-            //                 console.log(error);
-            //             });
+            var that = this;
+            var userId = this.props.userProfile.googleId;
+            var url = 'https://www.googleapis.com/plus/v1/people/' + userId + '/activities/public?key=AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds';
+            _axios2.default.get(url).then(function (response) {
+                that.setState({ postData: response.data.items });
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }, {
         key: 'loadProfile',
@@ -19146,7 +19109,6 @@ var Dashboard = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            console.log("state", this.state.loadProfile);
             var nevbar = _react2.default.createElement(
                 'nav',
                 { className: 'navbar navbar-inverse' },
@@ -19215,6 +19177,37 @@ var Dashboard = function (_Component) {
                     _react2.default.createElement('img', { src: this.props.userProfile.imageUrl })
                 )
             );
+            var postList = this.state.postData.map(function (items) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'Title : ',
+                        items.title
+                    ),
+                    ' ',
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'label',
+                        null,
+                        'updated : ',
+                        items.updated
+                    ),
+                    _react2.default.createElement('br', null)
+                );
+            });
+
+            var post = this.state.postData.length > 0 && _react2.default.createElement(
+                'div',
+                { className: 'row' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'col-sm-8' },
+                    postList
+                )
+            );
             return _react2.default.createElement(
                 'div',
                 { className: 'container' },
@@ -19254,7 +19247,8 @@ var Dashboard = function (_Component) {
                                     ' Public Post '
                                 )
                             ),
-                            profile
+                            profile,
+                            post
                         )
                     )
                 )

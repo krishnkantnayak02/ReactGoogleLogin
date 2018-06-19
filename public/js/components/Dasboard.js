@@ -4,66 +4,27 @@ import axios from 'axios';
 export default class Dashboard extends Component{
     constructor(props){
         super(props);
-        this.state = {profile : false}
+        this.state = {profile : false, postData : []}
         this.dashboardContains = this.dashboardContains.bind(this);
         this.loadProfile = this.loadProfile.bind(this);
         }
      dashboardContains() {
-
-gapi.load('client', start);
-                function start() {
-                    console.log("start", gapi)
-                gapi.client.init({
-                    'apiKey': 'AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds',
-                    'clientId': '642089443893-qfr86hlfvk53dc88c2abso29n5035mh8.apps.googleusercontent.com',
-                    'scope': 'https://www.googleapis.com/auth/plus.login'
-                }).then(function() {
-                    console.log("in side ten")
-                    // 3. Initialize and make the API request.
-                    // return gapi.client.people.people.get({
-                    // 'resourceName': 'people/me',
-                    // 'requestMask.includeField': 'person.names'
-                    // });
-
-                    var request = gapi.plus.activities.list({
-                        'userId' : 'me',
-                        'collection' : 'public'
-                      });
-                      
-                      request.execute(function(resp) {
-                        var numItems = resp.items.length;
-                        for (var i = 0; i < numItems; i++) {
-                          console.log('ID: ' + resp.items[i].id + ' Content: ' +
-                            resp.items[i].object.content);
-                        }
-                      });
-                      
-                }).then(function(response) {
-                    console.log(response.result);
-                }, function(reason) {
-                    console.log('Error: ' );
+        let that = this
+       let userId = this.props.userProfile.googleId
+       let url = 'https://www.googleapis.com/plus/v1/people/'+userId+'/activities/public?key=AIzaSyBGsUeaAmQd_EaNVwBcyiUfjDPHtJ_G8Ds'
+       axios.get(url)
+                .then(function (response) {
+                    that.setState({postData : response.data.items} )
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
-                };
-                // 1. Load the JavaScript client library.
-                
-
-    
-    //    let userId = this.props.userProfile.googleId 
-    //    let url = 'https://www.googleapis.com/plus/v1/people/'+userId+'/activities/public'
-    //    axios.get(url)
-    //             .then(function (response) {
-    //                 console.log(response);
-    //             })
-    //             .catch(function (error) {
-    //                 console.log(error);
-    //             });
     }
 
     loadProfile(){
         this.setState({loadProfile : true})
     }
     render(){
-        console.log("state" , this.state.loadProfile)
         let nevbar  = <nav className="navbar navbar-inverse">
                             <div className="container-fluid">
                             <div className="navbar-header">
@@ -85,6 +46,20 @@ gapi.load('client', start);
                                                         <img src = {this.props.userProfile.imageUrl} />
                                                         </div>
                                                     </div> 
+          let postList =  this.state.postData.map((items) => {
+                                    return(
+                                        <div>
+                                        <label >Title : {items.title}</label> <br/>
+                                        <label >updated : {items.updated}</label><br/>
+                                        </div>
+                                    )
+                            })
+
+              let post =  this.state.postData.length > 0    && <div className="row">
+                                                    <div className="col-sm-8" >
+                                                      {postList}
+                                                    </div>
+                                                    </div>
                return(
             <div className="container">
               {nevbar}
@@ -100,6 +75,7 @@ gapi.load('client', start);
                                     <button onClick = {this.dashboardContains} > Public Post </button>
                                     </nav>
                                     {profile}
+                                    {post}
                             </div>
                         </div>
                 </div>
