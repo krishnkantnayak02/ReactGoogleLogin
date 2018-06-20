@@ -7,15 +7,17 @@ export default class Acitivty extends Component {
   }
 
   render() {
-    let userProfile  = this.props.profile;
-    console.log("profile???????????", userProfile)
+    let userProfile = this.props.profile;
+    console.log("profile???????????", userProfile);
     if (this.props.activity) {
       return (
-        <div className="row">  
-            <h2>Time Line</h2>
-          {this.props.activity.data.items.map(function(data) {
-            return <Post content={data.object}  profile = {userProfile} />;
-          })}
+        <div className="row">
+          <h2>Time Line</h2>
+          <div class="col">
+            {this.props.activity.data.items.map(function(data) {
+              return <Post content={data.object} profile={userProfile} />;
+            })}
+          </div>
         </div>
       );
     } else {

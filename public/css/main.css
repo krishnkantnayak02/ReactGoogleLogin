@@ -1,3 +1,72 @@
-h1{
-    color: red;
+#root {
+  background-color: #f4f1f1;
+}
+
+.avatar {
+  float: left;
+  display: inline-block;
+  overflow: hidden;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: 50% 25%;
+  -webkit-transition: border 0.5s linear;
+  -moz-transition: border 0.5s linear;
+  -o-transition: border 0.5s linear;
+  transition: border 0.5s linear;
+}
+.avatar:hover:after {
+  opacity: 0.7;
+}
+.avatar.open:hover:after {
+  opacity: 0;
+}
+
+.qa-message-list {
+  min-width: 140px;
+  width: 100%;
+  margin: 0 auto 0;
+  outline: none;
+  -webkit-transition: background-color 200ms ease-in;
+  transition: background-color 200ms ease-in;
+  z-index: initial;
+  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  z-index: 1;
+}
+
+.message-item {
+  background-color: #fff;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  text-align: start;
+}
+
+.message-inner {
+  margin: 16px;
+}
+
+.height24 {
+  height: 24px;
+}
+
+.padding-top20 {
+  padding-top: 20px;
+}
+.user-detail {
+  display: flex;
+  flex: auto;
+}
+
+.profileName {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 16px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  padding-left: 10px;
 }

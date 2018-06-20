@@ -68,30 +68,31 @@ export default class Dashboard extends Component {
     return (
       <div className="container">
         {nevbar}
-        <div className="container">
-          <h2>Add Stream </h2> <br />
-          <div className="row">
-            <div className="col-sm-2">
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-                onClick={this.dashboardContains}
-                style = {{width:'180px'}}
-              >
-                Google +
-              </button>
-              <br />
-            </div>
-            <div className="col-sm-10">
-              <nav
-                className="navbar navbar-light bg-light"
-                style={{ border: "1px solid" }}
-              >
-                <button onClick={this.loadProfile}> Profile </button>
-              </nav>
-              {profile}
-              <Activity activity={this.state.activity} profile = {this.props.userProfile} />
-            </div>
+        <h2>Add Stream </h2> <br />
+        <div className="row">
+          <div className="col-sm-2">
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={this.dashboardContains}
+              style={{ width: "180px" }}
+            >
+              Google +
+            </button>
+            <br />
+          </div>
+          <div className="col-sm-10">
+            <nav
+              className="navbar navbar-light bg-light"
+              style={{ border: "1px solid" }}
+            >
+              <button onClick={this.loadProfile}> Profile </button>
+            </nav>
+            {profile}
+            <Activity
+              activity={this.state.activity}
+              profile={this.props.userProfile}
+            />
           </div>
         </div>
       </div>
