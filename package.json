@@ -1,5 +1,5 @@
 {
-  "name": "ReactGoogleLogin",
+  "name": "reactgooglelogin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,12 +23,14 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.2.1",
+    "react-player": "^1.6.4",
     "react-redux": "^5.0.6",
     "react-responsive-modal": "^2.0.0",
     "react-router": "^3.2.0",
     "react-stopwatch": "^1.0.3",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
+    "video-react": "^0.11.2",
     "webpack": "^3.10.0"
   }
 }

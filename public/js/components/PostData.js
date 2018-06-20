@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Player } from "video-react";
+import ReactPlayer from 'react-player';
+
 
 export default class PostDate extends Component {
   constructor(props) {
@@ -6,9 +9,7 @@ export default class PostDate extends Component {
   }
 
   render() {
-    console.log("profile on post page", this.props.profile.name);
     if (this.props.content) {
-      console.log("******** image", this.props.content);
       return (
         <div className="qa-message-list" id="wallmessages">
           <div className="message-item" id="m16">
@@ -28,17 +29,25 @@ export default class PostDate extends Component {
               </div>
               {this.props.content.attachments &&
                 this.props.content.attachments.map(function(data) {
+                  console.log("data checking>>>", data)
                   return (
                     <div className="padding-top20">
                       {data.displayName}
 
-                      {data.embed ? (
-                        <div className="container">
+                      {data.objectType == 'video' ? (
+                        <div className="container padding-top20">
                           {/* write code to show video here */}
-                          <img
-                            src={data.image.url}
-                            height={data.image.height}
-                          />
+                          <Player>
+                            <source src={data.url}  />
+                            </Player>
+                            {/* <div className='player-wrapper'>
+                                <ReactPlayer
+                                  className='react-player'
+                                  url={data.url}
+                                  width='200px'
+                                  height='200px'
+                                />
+                              </div> */}
                         </div>
                       ) : (
                         <div className="padding-top20">

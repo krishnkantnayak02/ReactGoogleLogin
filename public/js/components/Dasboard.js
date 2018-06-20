@@ -34,7 +34,6 @@ export default class Dashboard extends Component {
     this.setState({ loadProfile: true });
   }
   render() {
-    console.log("state", this.state.loadProfile);
     let nevbar = (
       <nav className="navbar navbar-inverse">
         <div className="container-fluid">
